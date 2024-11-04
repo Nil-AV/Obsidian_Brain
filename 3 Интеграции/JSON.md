@@ -4,16 +4,16 @@
 
 Сразу к практике. Допустим, нужно описать JSON для пользователя. В JSON будут имя, возраст и email. Начнем с простого:
 
-```
+```JSON
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "properties": {
+  "properties": {                       // Описание полей
     "name": {
       "type": "string"
     },
     "age": {
-      "type": "integer",
+      "type": "integer",                //Типы данных
       "minimum": 18
     },
     "email": {
@@ -21,6 +21,6 @@
       "format": "email"
     }
   },
-  "required": ["name", "age", "email"]
+  "required": ["name", "age", "email"]  //Обязательные поля
 }
 ```
