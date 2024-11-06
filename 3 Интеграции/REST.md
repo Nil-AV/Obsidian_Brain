@@ -184,3 +184,90 @@ https://qwerty.com/api/v1/books_**_?author=Orwell&title=1984
   }
 }
 ```
+
+```mermaid
+sequenceDiagram
+actor User
+User -> "ProductsController": GET /api/v1/products?page=1&limit=10&category=electronics&sort=price_asc
+activate "ProductsController"
+"ProductsController" -> "ProductService": GetProducts(page=1, limit=10, category=electronics, sort=price_asc)
+activate "ProductService"
+"ProductService" -> "ProductRepository": FindProducts(page=1, limit=10, category=electronics, sort=price_asc)
+activate "ProductRepository"
+"ProductRepository" --> "ProductService": Products list
+deactivate "ProductRepository"
+"ProductService" --> "ProductsController": Products list
+deactivate "ProductService"
+"ProductsController" --> User: 200 OK (JSON with products)
+deactivate "ProductsController"
+```
+
+**Описание диаграммы:**
+
+- **Актор “User”** - это пользователь, который отправляет GET запрос.
+- **“API Gateway”** - это слой, обрабатывающий входящие запросы.
+- **“ProductsController”** - контроллер, который обрабатывает запрос и взаимодействует с сервисом.
+- **“ProductService”** - сервис, отвечающий за логику работы с товарами.
+- **“ProductRepository”** - репозиторий, который взаимодействует с базой данных для получения списка товаров.
+
+# POST запрос
+
+## Пример описания POST запроса в техническом задании
+
+**Название метода:** Создание нового пользователя
+
+**Метод:** POST
+
+**URL:** /api/v1/users
+
+**Тело запроса:**
+
+```json
+{
+  "username": "john.doe",
+  "email": "john.doe@example.com",
+  "password": "secret123"
+}
+```
+
+**Параметры запроса:**
+
+- **Не используются**
+
+**Заголовки запроса:**
+
+- **Authorization:** Токен авторизации (необязательный).
+
+**Ответ:**
+
+**Статус код:**
+
+- **201 Created:** Пользователь успешно создан.
+- **400 Bad Request:** Некорректные данные в запросе.
+- **401 Unauthorized:** Не авторизован.
+- **403 Forbidden:** Нет доступа.
+- **500 Internal Server Error:** Ошибка сервера.
+
+**Тело ответа:**
+
+- **JSON:**
+
+```json
+{
+  "id": 123,
+  "username": "john.doe",
+  "email": "john.doe@example.com"
+}
+```
+
+**Описание:**
+
+Этот POST запрос используется для создания нового пользователя. Тело запроса содержит информацию о новом пользователе, включая имя пользователя, email и пароль.
+
+**Дополнительные замечания:**
+
+- Этот пример может быть адаптирован для конкретного проекта.
+- В некоторых случаях может быть необходимо добавить дополнительные поля в тело запроса, например, имя, фамилию, адрес и т.д.
+- Необходимо описать правила валидации данных в запросе, например, проверку формата email, длины пароля и т.д.
+- Важно описать все возможные варианты ответа, включая ошибки.
+- Рекомендуется использовать инструменты для тестирования API для проверки корректности запроса и ответа.
